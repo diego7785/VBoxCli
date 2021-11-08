@@ -1,5 +1,14 @@
 # VBoxCli
 
+This CLI is able to create virtual machines from a given os name, run any created machine by its name, stop any created machine by its name and destroy by its name only machines that has been created using this CLI
+
+## Requirements:
+
+1. VirtualBox
+2. Vagrant
+3. Node.js
+
+
 ## Ussage:
 
 ```
@@ -12,10 +21,10 @@ node app.js {command}
 ```
 node app.js -c ubuntu/xenial64
 ```
-This returns the id of the virtual machine
+This returns the name of the virtual machine
 
 
-**-r id_vm:** Runs the virtual machine with the given id 
+**-r name_vm:** Runs the virtual machine that matchs the given name
 ```
 node app.js -r b93ee3e4d4f612671299abec80b8c205
 ```
@@ -25,12 +34,12 @@ node app.js -r b93ee3e4d4f612671299abec80b8c205
 node app.js -r ubuntu/xenial64
 ```
 
-**-s id_vm:** Stops the virtual machine with the given id 
+**-s name_vm:** Stops the virtual machine that matchs the given name
 ```
 node app.js -s b93ee3e4d4f612671299abec80b8c205
 ```
 
-**-d id_vm:** Destroys the virtual machine with the given id 
+**-d name_vm:** Destroys the virtual machine that matchs the given name
 ```
 node app.js -d b93ee3e4d4f612671299abec80b8c205
 ```
