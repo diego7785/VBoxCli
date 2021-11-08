@@ -38,7 +38,7 @@ if(create){
 for(let i = 0; i < process.argv.length; i++){
     if(process.argv[i] == '-c'){
         createVagrantfile();
-        console.log('ID of VM: ', id);
+        console.log('Virtual Machine ', id), 'created';
     } else if(process.argv[i] == '-r'){
         runVagrantfile(process.argv[i+1]);
     } else if(process.argv[i] == '-s'){
@@ -46,16 +46,17 @@ for(let i = 0; i < process.argv.length; i++){
     } else if(process.argv[i] == '-cr'){
         createVagrantfile();
         runVagrantfile(id);
-        console.log('ID of VM: ', id);
+        console.log('Virtual Machine ', id), 'running';
     } else if (process.argv[i] == '-d'){
         destroyVM(process.argv[i+1]);
+        console.log('Virtual Machine',id, 'destroyed');
+
     }
 }
 
 function createVagrantfile(){
     fs.writeFile('./'+id+'/Vagrantfile', vagrantfile, function (err) {
         if (err) throw err;
-        console.log('File is created successfully.')
     });
 }
 
@@ -73,10 +74,8 @@ function runVagrantfile(id){
                     console.log(`stderr: ${stderr}`);
                     return;
                 }
-                console.log(`stdout: ${stdout}`);
             });
         };
-        console.log('Virtual Machine has started WITHOUT A GUI!');
     });
 }
 
@@ -106,7 +105,6 @@ function destroyVM(id){
         }, (error) => {
             console.log(error)
         });
-        console.log(`stdout: ${stdout}`);
     });
 }
 

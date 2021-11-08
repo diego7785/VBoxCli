@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "virtualbox": "^1.1.2"
+  }
+}
