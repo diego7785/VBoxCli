@@ -20,7 +20,6 @@ for(let i = 0; i < process.argv.length; i++) {
 const vagrantfile = `Vagrant.configure("2") do |config|
   config.vm.box = "${process.argv[3]}"
   config.vm.hostname = "${id}"
-  config.vm.define "${id}"
   config.vm.provider "virtualbox" do |v|
     v.name = "${id}"
     v.memory = "512"
