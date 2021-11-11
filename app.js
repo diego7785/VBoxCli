@@ -3,8 +3,10 @@ var fs = require('fs');
 const { exec } = require("child_process");
 const crypto = require('crypto');
 
+// Name of the virtual machine and the folder where the virtual machine will be created
 let id = crypto.randomBytes(16).toString("hex");
 
+// If the command is related to run, stop or destroy the folder will not be created
 let create = true
 for(let i = 0; i < process.argv.length; i++) {
     if(process.argv[i] == '-r' || process.argv[i] == '-s' || process.argv[i] == '-d') {
@@ -14,6 +16,7 @@ for(let i = 0; i < process.argv.length; i++) {
     }
 }
 
+// The vagrantfile to create the virtual machine
 const vagrantfile = `Vagrant.configure("2") do |config|
   config.vm.box = "${process.argv[3]}"
   config.vm.hostname = "${id}"
@@ -26,6 +29,8 @@ const vagrantfile = `Vagrant.configure("2") do |config|
 end
 `
 
+// If the command is related to create the machine and its folder has not been created yet
+// then the folder of the virtual machine will be created
 const dir = './' + id;
 if(create){
     if (!fs.existsSync(dir)) {
@@ -35,6 +40,7 @@ if(create){
     }
 }
 
+// Go over the arguments and execute the proccess that each argument represents
 for(let i = 0; i < process.argv.length; i++){
     if(process.argv[i] == '-c'){
         createVagrantfile();
@@ -54,13 +60,15 @@ for(let i = 0; i < process.argv.length; i++){
     }
 }
 
+// Creates the vagrantfile inside the folder of the virtual machine
 function createVagrantfile(){
     fs.writeFile('./'+id+'/Vagrantfile', vagrantfile, function (err) {
         if (err) throw err;
     });
 }
 
-
+// Tries to stand up the virtual machine using it's name, but if the virtual machine has not been run yet
+// the it will try to run the vagrantfile that was created inside the virtual machine folder
 function runVagrantfile(id){
     vbox.start(id, false, function start_callback(error) {
         if (error) {
@@ -79,6 +87,7 @@ function runVagrantfile(id){
     });
 }
 
+// Turns off the virtual machine
 function stopVM(id){
     vbox.poweroff(id, function poweroff_callback(error) {
         if (error) throw error;
@@ -86,6 +95,7 @@ function stopVM(id){
     });
 }
 
+// Destroy the virtual machines using the vagrant file created for it and deletes the folder that contains it
 function destroyVM(id){
     process.chdir('./'+id);
 
